@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
@@ -19,48 +20,66 @@ class StudentController extends Controller
     // Add data to students table using query builder
     public function addData()
     {
-        DB::table('students')->insert([         
-            [
-                'name' => 'tester2',
-                'email' => 'tester2@gmail.com',
-                'age' => 22,
-                'date_of_birth' => '2000-01-01',
-                'gender' => 'female',
-                'user_id' => 3,
-            ],
-            [
-                'name' => 'tester3',
-                'email' => 'tester3@gmail.com',
-                'age' => 28,
-                'date_of_birth' => '1995-01-01',
-                'gender' => 'other',
-                'user_id' => 4,
-            ],
-            [
-                'name' => 'tester4',
-                'email' => 'tester4@gmail.com',
-                'age' => 30,
-                'date_of_birth' => '1990-01-01',
-                'gender' => 'male',
-                'user_id' => 5,
-            ],
-               [
-                'name' => 'tester5',
-                'email' => 'tester5@gmail.com',
-                'age' => 25,
-                'date_of_birth' => '2010-01-01',
-                'gender' => 'male',
-                'user_id' => 6,
-            ],
-        ]);
+        $item = new Student();
+        $item->name = 'Krishnil';
+        $item->email = 'krishnil@gmail.com';
+        $item->age = 24;
+        $item->date_of_birth = '1999-01-01';
+        $item->gender = 'male';
+        $item->user_id = 2;
+        $item->save();
+
+        // DB::table('students')->insert([         
+        //     [
+        //         'name' => 'tester2',
+        //         'email' => 'tester2@gmail.com',
+        //         'age' => 22,
+        //         'date_of_birth' => '2000-01-01',
+        //         'gender' => 'female',
+        //         'user_id' => 3,
+        //     ],
+        //     [
+        //         'name' => 'tester3',
+        //         'email' => 'tester3@gmail.com',
+        //         'age' => 28,
+        //         'date_of_birth' => '1995-01-01',
+        //         'gender' => 'other',
+        //         'user_id' => 4,
+        //     ],
+        //     [
+        //         'name' => 'tester4',
+        //         'email' => 'tester4@gmail.com',
+        //         'age' => 30,
+        //         'date_of_birth' => '1990-01-01',
+        //         'gender' => 'male',
+        //         'user_id' => 5,
+        //     ],
+        //        [
+        //         'name' => 'tester5',
+        //         'email' => 'tester5@gmail.com',
+        //         'age' => 25,
+        //         'date_of_birth' => '2010-01-01',
+        //         'gender' => 'male',
+        //         'user_id' => 6,
+        //     ],
+        // ]);
 
         return 'Data added successfully';
     }
 
     public function getData()
     {
-        $students = DB::table('students')
-        ->count(); //to get count of records
+
+            //$students = Student::all(); //to get all records
+            // $students = Student::where('age', '>', 25)->get(); //to filter records  
+            // $students = Student::select('name', 'email', 'age') //to select specific columns
+            $students = Student::select('name', 'email', 'age')
+            ->where('id', 2)
+            ->get(); //to get all records that match the condition          
+            return $students;
+
+       // $students = DB::table('students')
+       // ->count(); //to get count of records
         // ->limit(3) //->first to get single record, ->get to get all records, ->where to filter records
         // ->get();//        ->where('age', '>', 25)
         // ->where('age', '>', 26)
@@ -68,23 +87,31 @@ class StudentController extends Controller
     //     ->where('id', 2)
     //     // ->orWhere('age', '>', 26)
     //     ->get();
-        return $students;
+      //  return $students;
 
     }
 
     public function updateData()
     {
-        DB::table('students')
-        ->where('id', 9)
-        ->update(['name' => 'updated name', 'email' => 'updated@email']);   
+        $item = Student::find(9);//to find a record by id
+        $item->name = 'updated name';
+        $item->email = 'updated@email';
+        $item->save();
+
+        // DB::table('students')
+        // ->where('id', 9)
+        // ->update(['name' => 'updated name', 'email' => 'updated@email']);   
         return 'Data updated successfully'; 
     }
 
     public function deleteData()
     {
-        DB::table('students')
-        ->where('id', 10)
-        ->delete();   
+        $item = Student::findOrFail(20);//to find a record by id
+        $item->delete();
+
+        // DB::table('students')
+        // ->where('id', 10)
+        // ->delete();   
         return 'Data deleted successfully'; 
     }
 }

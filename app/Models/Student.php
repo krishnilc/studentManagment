@@ -10,6 +10,8 @@ class Student extends Model
 {
     use HasFactory;
 
+    protected $hidden = ['name'];
+
     /**
      * Get the user that owns the student.
      */
