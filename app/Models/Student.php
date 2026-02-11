@@ -19,4 +19,16 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function scopeMale($query)
+    {
+        return $query->where('gender', 'male')
+        ->where('age', '>', 25); 
+    }
+
+    public function scopeFemale($query)
+    {
+        return $query->where('gender', 'female')
+        ->where('age', '>', 25);    
+    }
 }

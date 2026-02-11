@@ -114,4 +114,16 @@ class StudentController extends Controller
         // ->delete();   
         return 'Data deleted successfully'; 
     }
+
+    public function firstQuery()
+    {
+        $student = Student::male()->get(); //to get the first record
+        return $student;
+    }   
+
+      public function secondQuery()
+    {
+        $student = Student::male()->get(); //to get the first record
+        return $student;
+    }   
 }

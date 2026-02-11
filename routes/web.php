@@ -61,3 +61,5 @@ route::get('students/add', [StudentController::class, 'addData']);
 route::get('students/get', [StudentController::class, 'getData']);
 route::get('students/update', [StudentController::class, 'updateData']);
 route::get('students/delete', [StudentController::class, 'deleteData']);
+
+route::get('query1', [StudentController::class, 'firstQuery']);
