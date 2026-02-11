@@ -7,7 +7,7 @@ use App\Http\Controllers\TeacherController;
 use App\Models\Teacher;
 
 
-Route::get('/', function () {
+Route::get('/home', function () {
     return view('home');
 });
 
@@ -39,10 +39,10 @@ Route::get('contact-us/{name}/{email}', function ($name, $email) {
 
 // Route::get('students', [StudentController::class, 'index'] );
 
-Route::controller(StudentController::class)->group(function () {
-    Route::get('students', 'index');
-    Route::get('about-us', 'aboutUs');
-});
+// Route::controller(StudentController::class)->group(function () {
+//     Route::get('students', 'index');
+//     Route::get('about-us', 'aboutUs');
+// });
 
 Route::resource('second-test', SecondTestController::class);
 
@@ -56,10 +56,12 @@ Route::get('teachers/add', [TeacherController::class, 'add']);
 Route::get('teachers/show/{id}', [TeacherController::class, 'show']);
 Route::get('teachers/update/{id}', [TeacherController::class, 'update']);
 Route::get('teachers/delete/{id}', [TeacherController::class, 'delete']);
-
-route::get('students/add', [StudentController::class, 'addData']);
-route::get('students/get', [StudentController::class, 'getData']);
-route::get('students/update', [StudentController::class, 'updateData']);
-route::get('students/delete', [StudentController::class, 'deleteData']);
-
+// route::get('students/add', [StudentController::class, 'addData']);
+// route::get('students/get', [StudentController::class, 'getData']);
+// route::get('students/update', [StudentController::class, 'updateData']);
+// route::get('students/delete', [StudentController::class, 'deleteData']);
 route::get('query1', [StudentController::class, 'firstQuery']);
+
+route::prefix('students')->controller(StudentController::class)->group(function () {
+    route::get('/', 'index');  
+});

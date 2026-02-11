@@ -9,7 +9,7 @@ class StudentController extends Controller
 {
     public function index()
     {
-        return 'Hello from StudentController';
+       return view('students.index');
     }
 
     public function aboutUs()
@@ -70,12 +70,14 @@ class StudentController extends Controller
     public function getData()
     {
 
-            //$students = Student::all(); //to get all records
+        //    $students = Student::all(); //to get all records
+            $students = Student::onlyTrashed()->get(); //to get only soft deleted records
+            // $students = Student::withTrashed()->get(); //to get all records including soft deleted records
             // $students = Student::where('age', '>', 25)->get(); //to filter records  
             // $students = Student::select('name', 'email', 'age') //to select specific columns
-            $students = Student::select('name', 'email', 'age')
-            ->where('id', 2)
-            ->get(); //to get all records that match the condition          
+            // $students = Student::select('name', 'email', 'age')
+            // ->where('id', 2)
+            // ->get(); //to get all records that match the condition          
             return $students;
 
        // $students = DB::table('students')
@@ -106,7 +108,7 @@ class StudentController extends Controller
 
     public function deleteData()
     {
-        $item = Student::findOrFail(20);//to find a record by id
+        $item = Student::findOrFail(1);//to find a record by id
         $item->delete();
 
         // DB::table('students')
