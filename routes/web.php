@@ -62,6 +62,6 @@ Route::get('teachers/delete/{id}', [TeacherController::class, 'delete']);
 // route::get('students/delete', [StudentController::class, 'deleteData']);
 route::get('query1', [StudentController::class, 'firstQuery']);
 
-route::prefix('students')->controller(StudentController::class)->group(function () {
+route::prefix('student')->controller(StudentController::class)->group(function () {
     route::get('/', 'index');  
 });

@@ -7,14 +7,48 @@
 @section('page-description', 'Get in touch with our team - we are here to help')
 
 @section('content')
-        
 
-<p style="margin-bottom: 1.5rem; font-size: 1.05rem;">
-        If you have any questions or inquiries, please feel free to contact us at:
-    </p>
 
- 
-   
+<section>
+    <h2>Student List</h2>
+    <div class="search">
+        <form action={{ URL('student') }} method="GET">
+            <div class="search">
+                <input type="text" placeholder="Search students..." id="search" name="search">
+                <button type="submit">Search</button>
+            </div>
+        </form>
 
-    @include('SubViews.input', ['myName' => $name ?? 'User'])
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Date of Birth</th>
+                <th>Gender</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($students as $student)
+            <tr>
+                <td>{{ $student->id }}</td>
+                <td>{{ $student->name }}</td>
+                <td>{{ $student->email }}</td>
+                <td>{{ $student->age}}</td>
+                <td>{{ $student->date_of_birth }}</td>
+                <td>{{ $student->gender }}</td>
+                <td> <a href="#" class="editButton">Edit</a>
+                    <a href="#" class="deleteButton">Delete</a>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</section>
+
+
 @endsection

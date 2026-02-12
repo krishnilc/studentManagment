@@ -152,6 +152,113 @@
             line-height: 1.6;
         }
 
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #005bb5;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        h2 {
+            color: #005bb5;
+            text-align: center;
+        }
+
+        .search {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search input {
+            padding: 10px;
+            width: 50%;
+            margin-right: 10px;
+        }
+
+        .search button {
+            padding: 10px;
+            background-color: #005bb5;
+            color: white;
+            border: none;
+        }
+
+        .search button:hover {
+            background-color: #004080;
+        }
+
+        .editButton {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+        }
+
+        .editButton:hover {
+            background-color: #45a049;
+        }
+
+        .deleteButton {
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+        }
+
+        .deleteButton:hover {
+            background-color: #da190b;
+        }
+
+        .paginationDiv {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .addStudentButton {
+            background-color: #005bb5;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        .addStudentButton:hover {
+            background-color: #004080;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .main-container {
@@ -182,7 +289,7 @@
     <!-- Header -->
     <header>
         <div class="header-container">
-            <a href="#" class="logo">📚 Student Management</a>
+            <a href="#" class="logo">📚 ABC Management</a>
             <nav>
                 <a href="#home">Home</a>
                 <a href="#about">About</a>
