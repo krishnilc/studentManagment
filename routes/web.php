@@ -65,8 +65,12 @@ route::get('query1', [StudentController::class, 'firstQuery']);
 route::prefix('student')->controller(StudentController::class)->group(function () {
     Route::get('/', 'index');
     Route::view('/add', 'students.add');
-    Route::view('/edit', 'students.edit');
+    Route::get('/edit/{id}', [StudentController::class, 'edit'])->name('student.edit');
 });
 
 // Student Resource Routes
-Route::resource('students', StudentController::class)->only(['index', 'add', 'create', 'store', 'edit', 'update']);
+Route::resource('students', StudentController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+
+// Trash and Restore Routes
+Route::get('students/trash', [StudentController::class, 'trash'])->name('students.trash');
+Route::patch('students/{id}/restore', [StudentController::class, 'restore'])->name('students.restore');

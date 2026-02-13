@@ -105,6 +105,45 @@ class StudentController extends Controller
         }
     }
 
+    /**
+     * Remove the specified student from storage (soft delete).
+     */
+    public function destroy($id)
+    {
+        $student = Student::findOrFail($id);
+
+        try {
+            $student->delete();
+            return redirect()->route('students.index')->with('success', 'Student deleted successfully.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to delete student. Error: '.$e->getMessage());
+        }
+    }
+
+    /**
+     * Show all soft-deleted (trashed) students.
+     */
+    public function trash()
+    {
+        $students = Student::onlyTrashed()->paginate(10);
+        return view('students.trash', compact('students'));
+    }
+
+    /**
+     * Restore a soft-deleted student.
+     */
+    public function restore($id)
+    {
+        $student = Student::withTrashed()->findOrFail($id);
+
+        try {
+            $student->restore();
+            return redirect()->route('students.index')->with('success', 'Student restored successfully!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to restore student. Error: '.$e->getMessage());
+        }
+    }
+
     // Add data to students table using query builder
     public function addData()
     {

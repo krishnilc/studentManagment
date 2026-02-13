@@ -24,6 +24,7 @@
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
+        @isset($student)
         <div class="registration-card" style="background: white; padding: 2.5rem; border-radius: 10px;">
             <form action="{{ route('students.update', $student->id) }}" method="POST" novalidate>                  
                 @csrf
@@ -72,6 +73,9 @@
                 <input type="hidden" name="user_id" value="{{ old('user_id', $student->user_id) }}">
             </form>
         </div>
+        @else
+            <div class="alert alert-warning">No student selected to edit.</div>
+        @endisset
     </div>
 </div>
 
