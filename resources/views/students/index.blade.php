@@ -2,9 +2,10 @@
 
 @section('title', 'Index Student Management')
 
-@section('page-title', 'Index')
+<!-- @section('page-title', 'Index')
 
-@section('page-description', 'Get in touch with our team - we are here to help')
+@section('page-description', 'Get in touch with our team - we are here to help') -->
+
 
 @section('content')
 
@@ -14,8 +15,9 @@
     <div class="search">
         <form action={{ URL('student') }} method="GET">
             <div class="search">
-                <input type="text" placeholder="Search students..." id="search" name="search">
+                <input type="text" placeholder="Search students..." id="search" name="search" value="{{request('search')}}">
                 <button type="submit">Search</button>
+                <a href="{{ URL('student/add') }}" class="addStudentButton">Add Student</a>
             </div>
         </form>
 
@@ -48,6 +50,9 @@
             @endforeach
         </tbody>
     </table>
+    <div class="paginationDiv">
+        {{ $students->appends(request()->query())->links('pagination::bootstrap-5') }}
+    </div>
 </section>
 
 

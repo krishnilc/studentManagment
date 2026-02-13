@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Student Management')</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         * {
             margin: 0;
@@ -291,10 +292,10 @@
         <div class="header-container">
             <a href="#" class="logo">📚 ABC Management</a>
             <nav>
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
+                <a href="{{ URL('/home') }}">Home</a>
+                <a href="{{ URL('/about') }}">About</a>
                 <a href="#services">Services</a>
-                <a href="#contact">Contact</a>
+                <a href="{{ URL('/contactus') }}">Contact</a>
             </nav>
         </div>
     </header>
@@ -305,7 +306,7 @@
         <aside class="sidebar">
             <h3>Quick Links</h3>
             <div class="sidebar-links">
-                <a href="#link1">Dashboard</a>
+                <a href="{{ URL('student') }}">Dashboard</a>
                 <a href="#link2">My Profile</a>
                 <a href="#link3">Settings</a>
             </div>
@@ -313,10 +314,10 @@
 
         <!-- Content Section -->
         <main class="content">
-            <div class="content-header">
+            <!-- <div class="content-header">
                 <h1>@yield('page-title', 'Welcome')</h1>
-                <p>@yield('page-description', 'Manage your student information efficiently')</p>
-            </div>
+               <p>@yield('page-description', 'Manage your student information efficiently')</p>
+            </div> -->
 
             <div class="content-body">
                 @yield('content')

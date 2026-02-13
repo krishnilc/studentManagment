@@ -63,5 +63,10 @@ Route::get('teachers/delete/{id}', [TeacherController::class, 'delete']);
 route::get('query1', [StudentController::class, 'firstQuery']);
 
 route::prefix('student')->controller(StudentController::class)->group(function () {
-    route::get('/', 'index');  
+    Route::get('/', 'index');
+    Route::view('/add', 'students.add');
+    Route::view('/edit', 'students.edit');
 });
+
+// Student Resource Routes
+Route::resource('students', StudentController::class)->only(['index', 'add', 'create', 'store', 'edit', 'update']);

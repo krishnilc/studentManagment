@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\Countries;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -19,13 +20,89 @@ class StudentController extends Controller
                 'date_of_birth',
                 'gender',
             ], 'like', '%'.$request->search.'%');
-        })->get();
+        })->paginate(10);
         return view('students.index', compact('students'));
     }
 
     public function aboutUs()
     {
         return 'This is the about us page from StudentController';
+    }
+
+    /**
+     * Show the form for creating a new student.
+     */
+    public function create()
+    {
+        $countries = Countries::all();
+        return view('students.add', compact('countries'));
+    }
+
+    /**
+     * Store a newly created student in database.
+     */
+    public function store(Request $request)
+    {
+        // $student = new Student;
+        // $student->name = $request->name;
+        // $student->email = $request->email;
+        // $student->date_of_birth = $request->date_of_birth;
+        // $student->gender = $request->gender;
+        // $student->age = $request->age;
+        // $student->user_id = $request->user_id;
+        // $student->save();   
+        // return redirect('student');
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:students,email',
+            'date_of_birth' => 'required|date|before:today',
+            'gender' => 'required|in:male,female,other',
+            'age' => 'required|integer|min:5|max:120',
+            'user_id' => 'required|integer|exists:users,id',
+        ]);
+
+        try {
+            Student::create($validated);
+            return redirect()->route('students.index')->with('success', 'Student registered successfully!');
+        } catch (\Exception $e) {
+           // return back()->with('error', 'Failed to register student. Please try again.')->withInput();
+             return back()->with('error', 'Failed to register student. Please try again. Error: '.$e->getMessage())->withInput();
+        }
+    }
+
+    /**
+     * Show the form for editing the specified student.
+     */
+    public function edit($id)
+    {
+        $student = Student::findOrFail($id);
+        $countries = Countries::all();
+        return view('students.edit', compact('student', 'countries'));
+    }
+
+    /**
+     * Update the specified student in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        $student = Student::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:students,email,'.$student->id,
+            'date_of_birth' => 'required|date|before:today',
+            'gender' => 'required|in:male,female,other',
+            'age' => 'required|integer|min:5|max:120',
+            'user_id' => 'required|integer|exists:users,id',
+        ]);
+
+        try {
+            $student->update($validated);
+            return redirect()->route('students.index')->with('success', 'Student updated successfully!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to update student. Error: '.$e->getMessage())->withInput();
+        }
     }
 
     // Add data to students table using query builder
