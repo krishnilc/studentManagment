@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StudentAddRequest;
 use App\Models\Student;
 use App\Models\Countries;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class StudentController extends Controller
                 'age',
                 'date_of_birth',
                 'gender',
-            ], 'like', '%'.$request->search.'%');
+            ], 'like', '%' . $request->search . '%');
         })->paginate(10);
         return view('students.index', compact('students'));
     }
@@ -41,8 +42,12 @@ class StudentController extends Controller
     /**
      * Store a newly created student in database.
      */
-    public function store(Request $request)
+    public function store(StudentAddRequest $request)
     {
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('student_images', 'public');
+        }
         // $student = new Student;
         // $student->name = $request->name;
         // $student->email = $request->email;
@@ -53,21 +58,13 @@ class StudentController extends Controller
         // $student->save();   
         // return redirect('student');
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:students,email',
-            'date_of_birth' => 'required|date|before:today',
-            'gender' => 'required|in:male,female,other',
-            'age' => 'required|integer|min:5|max:120',
-            'user_id' => 'required|integer|exists:users,id',
-        ]);
-
+       
         try {
-            Student::create($validated);
+            Student::create($request->validated()); // Mass assignment using the validated data from the form request
             return redirect()->route('students.index')->with('success', 'Student registered successfully!');
         } catch (\Exception $e) {
-           // return back()->with('error', 'Failed to register student. Please try again.')->withInput();
-             return back()->with('error', 'Failed to register student. Please try again. Error: '.$e->getMessage())->withInput();
+            // return back()->with('error', 'Failed to register student. Please try again.')->withInput();
+            return back()->with('error', 'Failed to register student. Please try again. Error: ' . $e->getMessage())->withInput();
         }
     }
 
@@ -90,7 +87,7 @@ class StudentController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:students,email,'.$student->id,
+            'email' => 'required|string|email|max:255|unique:students,email,' . $student->id,
             'date_of_birth' => 'required|date|before:today',
             'gender' => 'required|in:male,female,other',
             'age' => 'required|integer|min:5|max:120',
@@ -101,7 +98,7 @@ class StudentController extends Controller
             $student->update($validated);
             return redirect()->route('students.index')->with('success', 'Student updated successfully!');
         } catch (\Exception $e) {
-            return back()->with('error', 'Failed to update student. Error: '.$e->getMessage())->withInput();
+            return back()->with('error', 'Failed to update student. Error: ' . $e->getMessage())->withInput();
         }
     }
 
@@ -116,7 +113,7 @@ class StudentController extends Controller
             $student->delete();
             return redirect()->route('students.index')->with('success', 'Student deleted successfully.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Failed to delete student. Error: '.$e->getMessage());
+            return back()->with('error', 'Failed to delete student. Error: ' . $e->getMessage());
         }
     }
 
@@ -140,7 +137,7 @@ class StudentController extends Controller
             $student->restore();
             return redirect()->route('students.index')->with('success', 'Student restored successfully!');
         } catch (\Exception $e) {
-            return back()->with('error', 'Failed to restore student. Error: '.$e->getMessage());
+            return back()->with('error', 'Failed to restore student. Error: ' . $e->getMessage());
         }
     }
 

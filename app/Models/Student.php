@@ -12,7 +12,7 @@ class Student extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['name', 'email', 'date_of_birth', 'gender', 'age', 'user_id'];
+    protected $fillable = ['name', 'email', 'date_of_birth', 'gender', 'age', 'user_id', 'image'];
     protected $hidden = ['name'];
 
     /**

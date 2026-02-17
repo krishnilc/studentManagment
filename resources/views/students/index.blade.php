@@ -81,6 +81,13 @@
         <tbody>
             @foreach($students as $student)
             <tr>
+                <td>
+                    @if(student->image) // Check if the student has an image
+                    <img src="{{ asset('storage/' . $student->image) }}" alt="Student Image" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                    @else
+                    <img src="{{ asset('images/default-avatar.png') }}" alt="Default Avatar" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                    @endif
+                </td>
                 <td>{{ $student->id }}</td>
                 <td>{{ $student->name }}</td>
                 <td>{{ $student->email }}</td>
