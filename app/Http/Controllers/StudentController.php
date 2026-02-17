@@ -44,10 +44,6 @@ class StudentController extends Controller
      */
     public function store(StudentAddRequest $request)
     {
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('student_images', 'public');
-        }
         // $student = new Student;
         // $student->name = $request->name;
         // $student->email = $request->email;
@@ -60,10 +56,14 @@ class StudentController extends Controller
 
        
         try {
-            Student::create($request->validated()); // Mass assignment using the validated data from the form request
+            $data = $request->validated();
+            if ($request->hasFile('image')) {
+                $data['image'] = $request->file('image')->store('student_images', 'public');
+            }
+
+            Student::create($data); // Mass assignment using the validated data from the form request
             return redirect()->route('students.index')->with('success', 'Student registered successfully!');
         } catch (\Exception $e) {
-            // return back()->with('error', 'Failed to register student. Please try again.')->withInput();
             return back()->with('error', 'Failed to register student. Please try again. Error: ' . $e->getMessage())->withInput();
         }
     }

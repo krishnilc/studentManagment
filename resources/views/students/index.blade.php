@@ -69,6 +69,7 @@
     <table>
         <thead>
             <tr>
+                <th>Avatar</th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
@@ -82,7 +83,7 @@
             @foreach($students as $student)
             <tr>
                 <td>
-                    @if(student->image) // Check if the student has an image
+                    @if(!empty($student->image))
                     <img src="{{ asset('storage/' . $student->image) }}" alt="Student Image" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
                     @else
                     <img src="{{ asset('images/default-avatar.png') }}" alt="Default Avatar" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">

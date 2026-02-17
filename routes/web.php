@@ -6,6 +6,9 @@ use App\Http\Controllers\SecondTestController;
 use App\Http\Controllers\TeacherController;
 use App\Models\Teacher;
 
+Route::get('/', function () {
+    return view('students.index');
+});
 
 Route::get('/home', function () {
     return view('home');
